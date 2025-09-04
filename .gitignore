@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+*.egg
+.Python
+
+# Virtual environment
+venv/
+.env/
+.venv/
+
+# Django
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+*.log
+
+# Django migrations cache 
+*/migrations/__pycache__/
+*/migrations/*.pyc
+
+
+*.dump
+*.sql
+
+# Docker
+*.pid
+*.seed
+docker-compose.override.yml
+.docker/
+.dockerignore
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+dump.rdb
+*.aof
+
+# IDEs & Editors
+.vscode/
+.idea/
+*.swp
+
+# Tests & Coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+nosetests.xml
+coverage.xml
+test_*.xml
+
+# MacOS / Linux / Windows OS
+.DS_Store
+Thumbs.db
