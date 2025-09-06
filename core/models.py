@@ -36,15 +36,14 @@ class Employee(models.Model):
 # مدل حضور و غیاب
 class Attendance(models.Model):
     objects = jmodels.jManager()
-    STATUS_CHOICES = (
-        ('present', 'حاضر'),
-        ('absent', 'غایب'),
-        ('late', 'دیرکرد'),
-    )
+    class Status(models.TextChoices):
+        PRESENT = 'present', 'حاضر'
+        ABSENT  = 'absent',  'غایب'
+        LATE    = 'late',    'دیرکرد'
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='attendances',verbose_name='کاربر')
     date = jmodels.jDateField(auto_now_add=True,verbose_name='تاریخ')
     check_in_time = models.TimeField(blank=True,null=True,verbose_name='ساعت')
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='absent',verbose_name='وضعیت')
+    status = models.CharField(max_length=10, choices=Status.choices, default='absent',verbose_name='وضعیت')
     late_minutes = models.PositiveIntegerField(default=0,verbose_name='مدت تاخیر(دقیقه)')
 
     def __str__(self):
