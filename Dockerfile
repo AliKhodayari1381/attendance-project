@@ -1,7 +1,6 @@
 # Dockerfile
 FROM python:3.11-slim
 
-# متغیر محیطی برای نمایش آنی لاگ‌ها
 ENV PYTHONUNBUFFERED=1
 
 # نصب ابزارهای مورد نیاز
@@ -13,7 +12,6 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# نصب dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
