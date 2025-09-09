@@ -38,11 +38,12 @@ def check_in(request):
     schedule = WorkSchedule.objects.first()
     work_start = schedule.start_time
 
-    status = "حاضر"
+    status=Attendance.Status.PRESENT.label
     late_minutes = 0
 
     if now.time() > work_start:
-        status = "دیر کرد"
+        status=Attendance.Status.LATE.label
+
         diff = datetime.combine(today, now.time()) - datetime.combine(today, work_start)
         late_minutes = diff.seconds // 60
 
@@ -57,7 +58,7 @@ def check_in(request):
     jalali_date = attendance.date.strftime("%Y-%m-%d")
     return Response({
         "پیغام": "با موفقیت ثبت شد",
-        "کارمند": employee.first_name,
+        "کارمند": employee.first_name +' '+employee.last_name,
         "تاریخ": jalali_date,
         "زمان": attendance.check_in_time.strftime("%H:%M"),
         "وضعیت": attendance.status,

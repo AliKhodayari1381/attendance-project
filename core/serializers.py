@@ -17,17 +17,25 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
 class AttendanceSerializer(serializers.ModelSerializer):
     employee_name = serializers.CharField(source='employee', read_only=True)
+    late_minutes_display = serializers.SerializerMethodField()
     class Meta:
         model = Attendance
-        fields = ['date' ,'check_in_time', 'status' ,'late_minutes','employee_name']
-
+        fields = ['id','date' ,'check_in_time', 'status' ,'late_minutes_display','employee_name']
+    def get_late_minutes_display(self, obj):
+        return f" {obj.late_minutes} دقیقه"
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data['کاربر'] = data.pop('employee_name')
         data['تاریخ'] = data.pop('date')
-        data['ثبت شده در'] = data.pop('check_in_time')
+
+        if instance.check_in_time:
+            data['ثبت شده در'] = str(instance.check_in_time.replace(microsecond=0))
+        else:
+            data['ثبت شده در'] = None  
+        
+        data.pop('check_in_time', None)
         data['status'] = instance.get_status_display()
         data['وضعیت'] = data.pop('status')
-        data['دیر کرد'] = data.pop('late_minutes')
+        data['دیر کرد'] = data.pop('late_minutes_display')
 
         return data
