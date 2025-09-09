@@ -16,7 +16,18 @@ class EmployeeSerializer(serializers.ModelSerializer):
         
 
 class AttendanceSerializer(serializers.ModelSerializer):
-    employee_name = serializers.ReadOnlyField(source='employee.first_name')
+    employee_name = serializers.CharField(source='employee', read_only=True)
     class Meta:
         model = Attendance
-        fields = '__all__'
+        fields = ['date' ,'check_in_time', 'status' ,'late_minutes','employee_name']
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['کاربر'] = data.pop('employee_name')
+        data['تاریخ'] = data.pop('date')
+        data['ثبت شده در'] = data.pop('check_in_time')
+        data['status'] = instance.get_status_display()
+        data['وضعیت'] = data.pop('status')
+        data['دیر کرد'] = data.pop('late_minutes')
+
+        return data
