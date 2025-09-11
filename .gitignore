@@ -26,6 +26,9 @@ staticfiles/
 */migrations/__pycache__/
 */migrations/*.pyc
 
+#Qr-code
+qr_codes/
+
 
 *.dump
 *.sql
