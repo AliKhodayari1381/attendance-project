@@ -9,14 +9,17 @@ click-repl==0.3.0
 cron_descriptor==2.0.6
 Django==5.2.5
 django-celery-beat==2.8.1
+django-filter==25.1
 django-jalali==7.4.0
 django-timezone-field==7.1
 django_celery_results==2.6.0
 djangorestframework==3.16.1
 djangorestframework_simplejwt==5.5.1
+et_xmlfile==2.0.0
 jalali_core==1.0.0
 jdatetime==5.2.0
 kombu==5.5.4
+openpyxl==3.1.5
 packaging==25.0
 pillow==11.3.0
 prompt_toolkit==3.0.52
