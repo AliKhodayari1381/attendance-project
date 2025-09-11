@@ -15,6 +15,10 @@ class Employee(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+    class Meta:
+        verbose_name = "کارمند"           
+        verbose_name_plural = "کارمند‌ان" 
+        ordering = ['last_name']
 
     # متد تولید QR Code
     def save(self, *args, **kwargs):
@@ -47,9 +51,18 @@ class Attendance(models.Model):
     late_minutes = models.PositiveIntegerField(default=0,verbose_name='مدت تاخیر(دقیقه)')
 
     def __str__(self):
-        return f"{self.employee} - {self.date.strftime('%d-%m-%Y')} - {self.status}"
+        return f"{self.employee} - {self.date.strftime('%d-%m-%Y')} - {self.get_status_display()}"
+    class Meta:
+        verbose_name = "حضور و غیاب"           
+        verbose_name_plural = "حضور و غیاب‌ها"
+        ordering = ['-date']
+
 
 #مدل ساعت کاری
 class WorkSchedule(models.Model):
     start_time = models.TimeField(default="08:00:00",verbose_name='ساعت شروع')
     end_time = models.TimeField(default="17:00:00",verbose_name='ساعت پایان')
+
+    class Meta:
+        verbose_name = "ساعت کاری"          
+        verbose_name_plural = "ساعت های کاری"
