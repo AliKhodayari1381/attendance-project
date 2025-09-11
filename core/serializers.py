@@ -4,13 +4,14 @@ from .models import Employee, Attendance
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
-        fields = ['id','first_name', 'last_name', 'employee_id']
+        fields = ['id','first_name', 'last_name', 'employee_id','qr_code']
     
     def to_representation(self, instance):
         rep = super().to_representation(instance)
         rep['نام'] = rep.pop('first_name')
         rep['نام خانوادگی'] = rep.pop('last_name')
         rep['کد کارمندی'] = rep.pop('employee_id')
+        rep['QR-code'] = rep.pop('qr_code')
         return rep
 
         
@@ -21,8 +22,11 @@ class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attendance
         fields = ['id','date' ,'check_in_time', 'status' ,'late_minutes_display','employee_name']
+
+        
     def get_late_minutes_display(self, obj):
         return f" {obj.late_minutes} دقیقه"
+    
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data['کاربر'] = data.pop('employee_name')
