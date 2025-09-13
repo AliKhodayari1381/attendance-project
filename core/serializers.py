@@ -13,7 +13,13 @@ class EmployeeSerializer(serializers.ModelSerializer):
         rep['کد کارمندی'] = rep.pop('employee_id')
         rep['QR-code'] = rep.pop('qr_code')
         return rep
-
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        request = self.context.get('request')
+        if request and request.method != 'GET':
+            
+            self.fields.pop('qr_code', None)
         
 
 class AttendanceSerializer(serializers.ModelSerializer):

@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets,filters
 from .models import Employee, Attendance,WorkSchedule
 from .serializers import EmployeeSerializer, AttendanceSerializer,WorkScheduleSerializers
 from rest_framework.decorators import api_view, permission_classes,action
@@ -15,6 +15,9 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
     permission_classes = [IsAdminUser,IsAuthenticated]
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter]
+    filterset_fields = ['employee_id']
+    search_fields = ['first_name', 'last_name', 'employee_id']
 
 class AttendanceViewSet(viewsets.ModelViewSet):
     queryset = Attendance.objects.all()

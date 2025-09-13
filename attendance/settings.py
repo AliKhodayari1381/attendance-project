@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django_celery_results',
     'django_celery_beat',
     'django_filters',
+    'django_cleanup.apps.CleanupConfig',
 
     # apps
     'core',
