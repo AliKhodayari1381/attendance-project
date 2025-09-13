@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from .models import Employee, Attendance,WorkSchedule
-from .serializers import EmployeeSerializer, AttendanceSerializer
+from .serializers import EmployeeSerializer, AttendanceSerializer,WorkScheduleSerializers
 from rest_framework.decorators import api_view, permission_classes,action
 from rest_framework.permissions import IsAuthenticated,AllowAny,IsAdminUser
 from rest_framework.response import Response
@@ -142,3 +142,8 @@ def check_in(request):
 
     })
     
+#ویو ساعت کاری
+class WorkScheduleViewSet(viewsets.ModelViewSet):
+    queryset = WorkSchedule.objects.all()
+    serializer_class = WorkScheduleSerializers
+    http_method_names = ['get', 'patch', 'delete']

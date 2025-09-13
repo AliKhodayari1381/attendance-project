@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Employee, Attendance
+from .models import Employee, Attendance,WorkSchedule
 
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -41,5 +41,18 @@ class AttendanceSerializer(serializers.ModelSerializer):
         data['status'] = instance.get_status_display()
         data['وضعیت'] = data.pop('status')
         data['دیر کرد'] = data.pop('late_minutes_display')
+
+        return data
+    
+
+class WorkScheduleSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = WorkSchedule
+        fields  =['start_time','end_time']
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['ساعت شروع'] = data.pop('start_time')
+        data['ساعت پایان'] = data.pop('end_time')
 
         return data
