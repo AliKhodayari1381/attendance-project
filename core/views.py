@@ -28,22 +28,24 @@ class AttendanceViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser,IsAuthenticated]
 
     def get_queryset(self):
-        
+     
         queryset = Attendance.objects.all()
-        date_param = self.request.query_params.get('date')
 
-        if date_param:  
-            try:
-                parts = [int(p) for p in date_param.split('-')]
-                date_obj = jdatetime.date(*parts)
-                queryset = queryset.filter(date=date_obj)
-            except Exception:
+        # فقط برای لیست فیلتر کن
+        if self.action == 'list':
+            date_param = self.request.query_params.get('date')
+
+            if date_param:
+                try:
+                    parts = [int(p) for p in date_param.split('-')]
+                    date_obj = jdatetime.date(*parts)
+                except Exception:
+                    date_obj = jdatetime.date.today()
+            else:
                 date_obj = jdatetime.date.today()
-        else:
-            date_obj = jdatetime.date.today()
 
-        queryset = queryset.filter(date=date_obj)
-        
+            queryset = queryset.filter(date=date_obj)
+
         return queryset
 
 
@@ -149,4 +151,5 @@ def check_in(request):
 class WorkScheduleViewSet(viewsets.ModelViewSet):
     queryset = WorkSchedule.objects.all()
     serializer_class = WorkScheduleSerializers
+    permission_classes = [IsAuthenticated,IsAdminUser]
     http_method_names = ['get', 'patch', 'delete']
