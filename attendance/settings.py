@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'django_filters',
     'django_cleanup.apps.CleanupConfig',
+    'drf_spectacular',
 
     # apps
     'core',
@@ -128,6 +129,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 
