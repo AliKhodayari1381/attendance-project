@@ -1,28 +1,15 @@
-# Dockerfile
 FROM python:3.11-slim
 
-ENV PYTHONUNBUFFERED=1
+WORKDIR /code
 
-# نصب ابزارهای مورد نیاز
-RUN apt-get update && apt-get install -y \
-    netcat-openbsd \
-    build-essential \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
+COPY requirements.txt /code/
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-WORKDIR /app
+COPY . /code/
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# کپی کل پروژه
-COPY . .
+EXPOSE 8000
 
-# پوشه static files
-RUN mkdir -p /app/staticfiles
-
-# فایل entrypoint
-COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
-
-ENTRYPOINT ["/app/entrypoint.sh"]
+CMD ["/entrypoint.sh"]
