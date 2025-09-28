@@ -23,10 +23,12 @@ sudo apt install nginx certbot python3-certbot-nginx -y
 cp nginx-setting-internal attendance
 ```
 فایل را باز کنید و ویرایش کنید
+دامنه خود را در  جای your-domain.com جایگزین کنید.
+
 ```bash
 nano attendance
 ```
-دامنه خود را در  جای your-domain.com جایگزین کنید.
+با دستور زیر فایل را انتقال دهید به مسیر زیر
 ```bash
 sudo mv attendance /etc/nginx/sites-available/
 ```
