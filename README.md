@@ -13,7 +13,7 @@
 ### 1️⃣ پروژه را clone کنید
 
 ```bash
-git clone https://github.com/AliKhodayari1381/attendance-qr.git
+git clone https://github.com/AliKhodayari1381/attendance-project
 
 cd attendance-project
 ```
