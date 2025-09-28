@@ -67,7 +67,8 @@ docker-compose down
 <div dir="rtl">
 
 ## 📦 ساختار پروژه
-<ul>
+
+ attendance-project
 <li>attendance-qr/ → بک‌اند Django</li>
 
 <li>attendance-frontend/ → فرانت‌اند React</li>
@@ -75,7 +76,7 @@ docker-compose down
 <li>docker-compose.yml → تعریف سرویس‌ها</li>
 
 <li>.env → متغیرهای محیطی</li>
-</ul>
+
 </div>
 
 
@@ -83,17 +84,17 @@ docker-compose down
 
 ## ⚡ <b>پیش‌نیازها</b>
 
-<ul>
+
   <li>Docker و Docker Compose نصب شده باشد</li>
   <li>Git نصب باشد</li>
-</ul>
+
 
 </div>
 
 
-<div dir="rtl" style="text-align: right;">
+<div dir="rtl">
 
-<h2>🔒 SSL و Nginx</h2>
+<li><h2>🔒 SSL و Nginx</h2></li>
 
 <p>برای فعال‌سازی HTTPS و دریافت SSL رایگان، به پوشه <code>Get_ssl/</code> مراجعه کنید.<br>
 داخل این پوشه فایل پیکربندی Nginx و README مخصوص فعال‌سازی SSL موجود است.</p>
