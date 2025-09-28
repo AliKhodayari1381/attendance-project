@@ -1,0 +1,87 @@
+version: "3.9"
+
+services:
+  # Backend Django
+  backend:
+    build:
+      context: ./attendance-qr
+      dockerfile: Dockerfile
+    container_name: attendance-project-backend
+    entrypoint: ./entrypoint.sh
+    volumes:
+      - ./attendance-qr:/code
+      - static_volume:/code/staticfiles
+      - ./media:/code/media
+    ports:
+      - "8001:8000"
+    depends_on:
+      - db
+      - redis
+    env_file:
+      - .env
+
+  # Frontend + nginx
+  frontend:
+    build:
+      context: ./attendance-frontend
+      dockerfile: Dockerfile
+    container_name: attendance-project-nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    volumes:
+      - static_volume:/code/staticfiles:ro
+      - ./media:/code/media
+
+  # Redis
+  redis:
+    image: redis:7
+    container_name: attendance-project-redis
+    ports:
+      - "6379:6379"
+
+  # Celery Worker
+  celery_worker:
+    build:
+      context: ./attendance-qr
+      dockerfile: Dockerfile
+    container_name: attendance-project-celery_worker
+    command: celery -A attendance worker -l info
+    depends_on:
+      - backend
+      - redis
+    env_file:
+      - .env
+
+  # Celery Beat
+  celery_beat:
+    build:
+      context: ./attendance-qr
+      dockerfile: Dockerfile
+    container_name: attendance-project-celery_beat
+    command: celery -A attendance beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    depends_on:
+      - backend
+      - redis
+    env_file:
+      - .env
+
+  # PostgreSQL
+  db:
+    image: postgres:15
+    container_name: attendance-project-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+# Volumes
+volumes:
+  postgres_data:
+  static_volume:
+
