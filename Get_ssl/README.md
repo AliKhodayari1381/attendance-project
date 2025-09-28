@@ -13,7 +13,7 @@ sudo apt install nginx certbot python3-certbot-nginx -y
 ```
 پورت بخش فرانت اند docker-compose.yml را برای اجرا با ssl روی 8080:80 تغییر دهید و سپس build بگیرید.
 
-2️⃣ ویرایش کانفیگ Nginx
+## 2️⃣ ویرایش کانفیگ Nginx
 
 وارد پوشه Get_ssl شوید.
 
@@ -30,8 +30,8 @@ nano attendance
 ```bash
 sudo mv attendance /etc/nginx/sites-available/
 ```
-
-3️⃣ فعال‌سازی کانفیگ Nginx
+  
+## 3️⃣ فعال‌سازی کانفیگ Nginx
 
 ```bash
 sudo ln -s /etc/nginx/sites-available/attendance /etc/nginx/sites-enabled/
@@ -39,7 +39,7 @@ sudo nginx -t
 sudo systemctl restart nginx
 ```
 
-4️⃣ فعال‌سازی SSL با Certbot
+## 4️⃣ فعال‌سازی SSL با Certbot
 
 ```bash
 sudo certbot --nginx -d your-domain.com
@@ -48,7 +48,7 @@ sudo certbot --nginx -d your-domain.com
 پس از اجرای این دستور، Certbot به طور خودکار گواهی SSL را دریافت و Nginx را به‌روزرسانی می‌کند.
 
 
-5️⃣ نتیجه
+## 5️⃣ نتیجه
 
 تمام درخواست‌های HTTP به HTTPS هدایت می‌شوند.
 
